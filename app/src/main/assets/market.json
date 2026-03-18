@@ -1,0 +1,19 @@
+[
+  { "id": "AAPL", "name": "Apple", "category": "Stocks", "basePrice": 213.0, "volatility": 0.012 },
+  { "id": "TSLA", "name": "Tesla", "category": "Stocks", "basePrice": 248.0, "volatility": 0.018 },
+  { "id": "AMZN", "name": "Amazon", "category": "Stocks", "basePrice": 198.0, "volatility": 0.015 },
+  { "id": "NVDA", "name": "NVIDIA", "category": "Stocks", "basePrice": 875.0, "volatility": 0.016 },
+  { "id": "MSFT", "name": "Microsoft", "category": "Stocks", "basePrice": 415.0, "volatility": 0.010 },
+  { "id": "BTC", "name": "Bitcoin", "category": "Crypto", "basePrice": 82500.0, "volatility": 0.040 },
+  { "id": "ETH", "name": "Ethereum", "category": "Crypto", "basePrice": 3180.0, "volatility": 0.045 },
+  { "id": "SOL", "name": "Solana", "category": "Crypto", "basePrice": 148.0, "volatility": 0.050 },
+  { "id": "BNB", "name": "BNB", "category": "Crypto", "basePrice": 412.0, "volatility": 0.035 },
+  { "id": "EURUSD", "name": "EUR/USD", "category": "Forex", "basePrice": 1.08, "volatility": 0.003 },
+  { "id": "GBPUSD", "name": "GBP/USD", "category": "Forex", "basePrice": 1.26, "volatility": 0.003 },
+  { "id": "USDJPY", "name": "USD/JPY", "category": "Forex", "basePrice": 151.0, "volatility": 0.004 },
+  { "id": "AUDUSD", "name": "AUD/USD", "category": "Forex", "basePrice": 0.65, "volatility": 0.002 },
+  { "id": "XAU", "name": "Gold", "category": "Commodities", "basePrice": 3112.0, "volatility": 0.010 },
+  { "id": "XAG", "name": "Silver", "category": "Commodities", "basePrice": 34.0, "volatility": 0.015 },
+  { "id": "OIL", "name": "Crude Oil", "category": "Commodities", "basePrice": 82.0, "volatility": 0.018 },
+  { "id": "NGAS", "name": "Natural Gas", "category": "Commodities", "basePrice": 2.18, "volatility": 0.020 }
+]

@@ -1,0 +1,14 @@
+{
+  "tips": [
+    { "id": 1, "icon": "trending_up", "difficulty": "Beginner", "title": "Buy Low, Sell High", "body": "The fundamental rule of trading. Look for assets that are undervalued." },
+    { "id": 2, "icon": "pie_chart", "difficulty": "Beginner", "title": "Diversify", "body": "Don't put all your eggs in one basket. Spread risk across different Asset categories." },
+    { "id": 3, "icon": "warning", "difficulty": "Intermediate", "title": "Manage Risk", "body": "Never risk more than 1-2% of your total capital on a single trade." },
+    { "id": 4, "icon": "timeline", "difficulty": "Intermediate", "title": "Follow Trends", "body": "The trend is your friend until it bends. Trade in the direction of the market." },
+    { "id": 5, "icon": "psychology", "difficulty": "Advanced", "title": "Control Emotions", "body": "Fear and greed are your worst enemies. Stick to your trading plan." },
+    { "id": 6, "icon": "account_balance", "difficulty": "Intermediate", "title": "Understand Leverage", "body": "Leverage amplifies both gains and losses. Use it with extreme caution." },
+    { "id": 7, "icon": "show_chart", "difficulty": "Advanced", "title": "Technical Analysis", "body": "Learn to read charts and identify key support and resistance levels." },
+    { "id": 8, "icon": "article", "difficulty": "Beginner", "title": "Stay Informed", "body": "Keep up with news events that can move the markets." },
+    { "id": 9, "icon": "history", "difficulty": "Intermediate", "title": "Keep a Journal", "body": "Record your trades to learn from your mistakes and successes." },
+    { "id": 10, "icon": "lightbulb", "difficulty": "Beginner", "title": "Patience is Key", "body": "Sometimes the best trade is no trade at all. Wait for the right setup." }
+  ]
+}

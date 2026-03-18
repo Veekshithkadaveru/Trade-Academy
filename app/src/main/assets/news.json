@@ -1,0 +1,14 @@
+{
+  "articles": [
+    { "id": 1, "category": "Market", "headline": "Tech Stocks Rally", "summary": "Silicon Valley giants continue their upward trend.", "body": "Tech stocks have seen an unprecedented rally this week, driven by AI innovations.", "tag": "Bullish", "date": "Oct 24" },
+    { "id": 2, "category": "Crypto", "headline": "Bitcoin Breaks Resistance", "summary": "BTC pushes past key psychological levels.", "body": "Bitcoin surged over 5% today following institutional adoption news.", "tag": "Trending", "date": "Oct 24" },
+    { "id": 3, "category": "Forex", "headline": "Fed Holds Rates", "summary": "The central bank decided to maintain current interest rates.", "body": "In a highly anticipated move, rates remain steady, impacting the USD index.", "tag": "Economy", "date": "Oct 23" },
+    { "id": 4, "category": "Commodities", "headline": "Gold Hits New High", "summary": "Safe haven asset continues to shine.", "body": "Global uncertainty has driven investors to gold, pushing prices up.", "tag": "Bullish", "date": "Oct 23" },
+    { "id": 5, "category": "Crypto", "headline": "Ethereum Upgrade Complete", "summary": "Network efficiency improved.", "body": "Gas fees are expected to drop significantly.", "tag": "Tech", "date": "Oct 22" },
+    { "id": 6, "category": "Stocks", "headline": "Earnings Season Beats", "summary": "Major corporations report stronger than expected earnings.", "body": "Consumer spending remains robust.", "tag": "Earnings", "date": "Oct 22" },
+    { "id": 7, "category": "Forex", "headline": "Euro Gains Ground", "summary": "ECB hints at future rate hikes.", "body": "The Euro saw slight gains against the dollar.", "tag": "Policy", "date": "Oct 21" },
+    { "id": 8, "category": "Commodities", "headline": "Oil Prices Stabilize", "summary": "OPEC+ signals no immediate supply changes.", "body": "Market reacts calmly to latest production quota news.", "tag": "Energy", "date": "Oct 21" },
+    { "id": 9, "category": "Market", "headline": "Retail Sales Surprise", "summary": "Consumers are still spending.", "body": "Despite inflation concerns, retail sales grew by 0.5% last month.", "tag": "Economy", "date": "Oct 20" },
+    { "id": 10, "category": "Crypto", "headline": "Regulatory Clarity Needed", "summary": "Industry leaders call for clearer rules.", "body": "Firms urge policymakers to establish clear guidelines to foster innovation.", "tag": "Regulation", "date": "Oct 20" }
+  ]
+}
