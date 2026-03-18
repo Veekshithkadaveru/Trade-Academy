@@ -47,6 +47,7 @@ private val categoryEmojis = mapOf(
     "Commodities" to ""
 )
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MarketScreen(
     onAssetClick: (String) -> Unit = {},
@@ -55,6 +56,7 @@ fun MarketScreen(
     val uiState by marketViewModel.uiState.collectAsState()
     var searchQuery by remember { mutableStateOf("") }
     var sortByChange by remember { mutableStateOf(false) }
+    var selectedAsset by remember { mutableStateOf<app.krafted.tradeacademy.data.Asset?>(null) }
 
     val displayedAssets = uiState.assets
         .filter { asset ->
@@ -91,6 +93,15 @@ fun MarketScreen(
                     )
                 )
         )
+
+        // BuySell Sheet
+        selectedAsset?.let { asset ->
+            BuySellSheet(
+                asset = asset,
+                currentPrice = uiState.livePrices[asset.id] ?: asset.basePrice,
+                onDismiss = { selectedAsset = null }
+            )
+        }
 
         Column(modifier = Modifier.fillMaxSize().padding(top = 16.dp)) {
             
@@ -189,7 +200,7 @@ fun MarketScreen(
                     AssetCard(
                         asset = asset,
                         currentPrice = uiState.livePrices[asset.id] ?: asset.basePrice,
-                        onClick = { onAssetClick(asset.id) }
+                        onClick = { selectedAsset = asset }
                     )
                 }
                 item { Spacer(modifier = Modifier.height(80.dp)) }
