@@ -1,4 +1,8 @@
+@file:Keep
+
 package app.krafted.tradeacademy.data
+
+import androidx.annotation.Keep
 
 data class Asset(
     val id: String,

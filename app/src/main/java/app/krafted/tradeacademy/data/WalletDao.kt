@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Transaction
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -16,4 +17,14 @@ interface WalletDao {
 
     @Query("UPDATE wallet SET cashBalance = :balance WHERE id = 1")
     suspend fun updateBalance(balance: Double)
+
+    @Transaction
+    suspend fun updateBalanceAndSeedIfMissing(balance: Double) {
+        val current = getWalletOnce()
+        if (current == null) upsertWallet(WalletEntity(cashBalance = balance))
+        else updateBalance(balance)
+    }
+
+    @Query("SELECT * FROM wallet WHERE id = 1")
+    suspend fun getWalletOnce(): WalletEntity?
 }

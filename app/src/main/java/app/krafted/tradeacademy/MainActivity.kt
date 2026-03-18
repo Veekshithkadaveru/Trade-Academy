@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -19,8 +18,11 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import app.krafted.tradeacademy.ui.HomeScreen
+import app.krafted.tradeacademy.ui.MarketScreen
+import app.krafted.tradeacademy.ui.NewsTipsScreen
+import app.krafted.tradeacademy.ui.PortfolioScreen
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
@@ -64,10 +66,10 @@ fun TradeAcademyApp() {
                     NavigationBarItem(
                         icon = {
                             when (screen) {
-                                Screen.Home -> Icon(Icons.Filled.Home, contentDescription = null)
-                                Screen.Market -> Icon(Icons.Filled.List, contentDescription = null)
-                                Screen.NewsTips -> Icon(Icons.Filled.Info, contentDescription = null)
-                                Screen.Portfolio -> Icon(Icons.Filled.Person, contentDescription = null)
+                                Screen.Home -> Icon(Icons.Filled.Home, contentDescription = "Home")
+                                Screen.Market -> Icon(Icons.Filled.List, contentDescription = "Market")
+                                Screen.NewsTips -> Icon(Icons.Filled.Info, contentDescription = "News & Tips")
+                                Screen.Portfolio -> Icon(Icons.Filled.Person, contentDescription = "Portfolio")
                             }
                         },
                         label = { Text(screen.label) },
@@ -91,17 +93,10 @@ fun TradeAcademyApp() {
             startDestination = Screen.Home.route,
             modifier = Modifier.padding(innerPadding)
         ) {
-            composable(Screen.Home.route) { PlaceholderScreen("Home Screen") }
-            composable(Screen.Market.route) { PlaceholderScreen("Market Screen") }
-            composable(Screen.NewsTips.route) { PlaceholderScreen("News & Tips Screen") }
-            composable(Screen.Portfolio.route) { PlaceholderScreen("Portfolio Screen") }
+            composable(Screen.Home.route) { HomeScreen(navController) }
+            composable(Screen.Market.route) { MarketScreen() }
+            composable(Screen.NewsTips.route) { NewsTipsScreen() }
+            composable(Screen.Portfolio.route) { PortfolioScreen() }
         }
-    }
-}
-
-@Composable
-fun PlaceholderScreen(title: String) {
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        Text(text = title)
     }
 }
