@@ -59,7 +59,7 @@ fun NewsTipsScreen(contentViewModel: ContentViewModel = viewModel()) {
 
     AppBackground {
         Column(modifier = Modifier.fillMaxSize().padding(top = 16.dp)) {
-            // Header
+
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -80,7 +80,7 @@ fun NewsTipsScreen(contentViewModel: ContentViewModel = viewModel()) {
 
             Spacer(modifier = Modifier.height(12.dp))
 
-            // Tab chips
+
             LazyRow(
                 modifier = Modifier.fillMaxWidth(),
                 contentPadding = PaddingValues(horizontal = 16.dp),
@@ -112,7 +112,7 @@ fun NewsTipsScreen(contentViewModel: ContentViewModel = viewModel()) {
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            // Count label
+
             Text(
                 text = if (selectedTab == 0) "${uiState.articles.size} articles" else "${uiState.tips.size} tips",
                 fontSize = 12.sp,
@@ -120,7 +120,7 @@ fun NewsTipsScreen(contentViewModel: ContentViewModel = viewModel()) {
                 modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp)
             )
 
-            // Content
+
             when (selectedTab) {
                 0 -> {
                     LazyColumn(
@@ -174,7 +174,7 @@ private fun NewsCard(article: Article, isExpanded: Boolean, onClick: () -> Unit)
             .background(Color(0x26FFFFFF))
             .clickable(onClick = onClick)
     ) {
-        // Left accent strip
+
         Box(
             modifier = Modifier
                 .width(3.dp)
@@ -191,7 +191,7 @@ private fun NewsCard(article: Article, isExpanded: Boolean, onClick: () -> Unit)
                 .fillMaxWidth()
                 .padding(start = 16.dp, end = 16.dp, top = 14.dp, bottom = 14.dp)
         ) {
-            // Top row: tag badge + date
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -219,7 +219,7 @@ private fun NewsCard(article: Article, isExpanded: Boolean, onClick: () -> Unit)
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            // Headline
+
             Text(
                 text = article.headline,
                 color = Color.White,
@@ -229,14 +229,14 @@ private fun NewsCard(article: Article, isExpanded: Boolean, onClick: () -> Unit)
 
             Spacer(modifier = Modifier.height(4.dp))
 
-            // Summary
+
             Text(
                 text = article.summary,
                 color = Color(0xFF999999),
                 fontSize = 13.sp
             )
 
-            // Category label
+
             Spacer(modifier = Modifier.height(6.dp))
             Text(
                 text = article.category,
@@ -245,7 +245,7 @@ private fun NewsCard(article: Article, isExpanded: Boolean, onClick: () -> Unit)
                 fontWeight = FontWeight.SemiBold
             )
 
-            // Expanded body
+
             AnimatedVisibility(
                 visible = isExpanded,
                 enter = expandVertically(animationSpec = tween(300)),
@@ -301,7 +301,7 @@ private fun TipCard(tip: Tip, isExpanded: Boolean, onClick: () -> Unit) {
                 .padding(start = 16.dp, end = 16.dp, top = 14.dp, bottom = 14.dp),
             horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            // Icon box
+
             Box(
                 modifier = Modifier
                     .size(44.dp)
@@ -316,7 +316,7 @@ private fun TipCard(tip: Tip, isExpanded: Boolean, onClick: () -> Unit) {
             }
 
             Column(modifier = Modifier.weight(1f)) {
-                // Title row with difficulty badge
+
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
@@ -347,7 +347,7 @@ private fun TipCard(tip: Tip, isExpanded: Boolean, onClick: () -> Unit) {
 
                 Spacer(modifier = Modifier.height(4.dp))
 
-                // Preview text (always visible)
+
                 Text(
                     text = tip.body,
                     color = Color(0xFF999999),
@@ -355,7 +355,7 @@ private fun TipCard(tip: Tip, isExpanded: Boolean, onClick: () -> Unit) {
                     maxLines = if (isExpanded) Int.MAX_VALUE else 2
                 )
 
-                // Expanded body with full text
+
                 AnimatedVisibility(
                     visible = isExpanded,
                     enter = expandVertically(animationSpec = tween(300)),

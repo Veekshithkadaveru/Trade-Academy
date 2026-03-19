@@ -24,9 +24,9 @@ fun AppBackground(modifier: Modifier = Modifier, content: @Composable () -> Unit
             .fillMaxSize()
             .background(Color(0xFF090C14))
     ) {
-        // Radial glow layer
+
         Canvas(modifier = Modifier.fillMaxSize()) {
-            // Top-left blue glow
+
             val topGlow = ShaderBrush(
                 RadialGradientShader(
                     center = Offset(0f, 0f),
@@ -37,7 +37,7 @@ fun AppBackground(modifier: Modifier = Modifier, content: @Composable () -> Unit
             )
             drawRect(brush = topGlow)
 
-            // Bottom-right teal/purple glow
+
             val bottomGlow = ShaderBrush(
                 RadialGradientShader(
                     center = Offset(size.width, size.height),
@@ -48,7 +48,7 @@ fun AppBackground(modifier: Modifier = Modifier, content: @Composable () -> Unit
             )
             drawRect(brush = bottomGlow)
 
-            // Dot grid - pre-calculate points and draw in batch
+
             val dotColor = Color(0x14FFFFFF)
             val spacing = 48f
             val points = mutableListOf<Offset>()

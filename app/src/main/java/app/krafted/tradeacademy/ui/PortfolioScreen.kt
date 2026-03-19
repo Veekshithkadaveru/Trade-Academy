@@ -84,7 +84,7 @@ fun PortfolioScreen(
                 .padding(top = 16.dp),
             contentPadding = PaddingValues(bottom = 100.dp)
         ) {
-            // Header
+
             item {
                 Row(
                     modifier = Modifier
@@ -110,7 +110,7 @@ fun PortfolioScreen(
                 Spacer(modifier = Modifier.height(16.dp))
             }
 
-            // Summary card
+
             item {
                 PortfolioSummaryCard(
                     cashBalance = cashBalance,
@@ -121,7 +121,7 @@ fun PortfolioScreen(
                 Spacer(modifier = Modifier.height(24.dp))
             }
 
-            // Holdings section
+
             item {
                 Text(
                     text = "Holdings",
@@ -159,7 +159,7 @@ fun PortfolioScreen(
                 item { Spacer(modifier = Modifier.height(8.dp)) }
             }
 
-            // Trade History section
+
             item {
                 Text(
                     text = "Trade History",
@@ -193,7 +193,7 @@ fun PortfolioScreen(
                 item { Spacer(modifier = Modifier.height(8.dp)) }
             }
 
-            // Reset button
+
             item {
                 Button(
                     onClick = { showResetDialog = true },
