@@ -16,9 +16,11 @@ import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.animation.ExitTransition
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import app.krafted.tradeacademy.ui.HomeScreen
 import app.krafted.tradeacademy.ui.MarketScreen
 import app.krafted.tradeacademy.ui.NewsTipsScreen
@@ -30,6 +32,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import app.krafted.tradeacademy.ui.theme.TradeAcademyTheme
+import androidx.lifecycle.viewmodel.compose.viewModel
+import app.krafted.tradeacademy.viewmodel.MarketViewModel
 
 sealed class Screen(val route: String, val label: String) {
     object Home : Screen("home", "Home")
@@ -53,10 +57,12 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun TradeAcademyApp() {
     val navController = rememberNavController()
+    val marketViewModel: MarketViewModel = viewModel()
     val screens = listOf(Screen.Home, Screen.Market, Screen.NewsTips, Screen.Portfolio)
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
+        containerColor = Color(0xFF090C14),
         bottomBar = {
             NavigationBar {
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -94,9 +100,12 @@ fun TradeAcademyApp() {
             modifier = Modifier.padding(innerPadding)
         ) {
             composable(Screen.Home.route) { HomeScreen(navController) }
-            composable(Screen.Market.route) { MarketScreen() }
+            composable(
+                route = Screen.Market.route,
+                exitTransition = { ExitTransition.None }
+            ) { MarketScreen(marketViewModel = marketViewModel) }
             composable(Screen.NewsTips.route) { NewsTipsScreen() }
-            composable(Screen.Portfolio.route) { PortfolioScreen() }
+            composable(Screen.Portfolio.route) { PortfolioScreen(marketViewModel = marketViewModel) }
         }
     }
 }

@@ -26,6 +26,8 @@ class MarketViewModel(application: Application) : AndroidViewModel(application) 
     private val _uiState = MutableStateFlow(MarketUiState())
     val uiState: StateFlow<MarketUiState> = _uiState.asStateFlow()
 
+    private var assetMap: Map<String, Asset> = emptyMap()
+
     init {
         loadAssets()
         startPriceTick()
@@ -34,6 +36,7 @@ class MarketViewModel(application: Application) : AndroidViewModel(application) 
     private fun loadAssets() {
         viewModelScope.launch {
             val assets = repository.getAssets()
+            assetMap = assets.associateBy { it.id }
             val initialPrices = assets.associate { it.id to it.basePrice }
             _uiState.update { it.copy(assets = assets, livePrices = initialPrices) }
         }
@@ -45,7 +48,7 @@ class MarketViewModel(application: Application) : AndroidViewModel(application) 
                 delay(30_000L)
                 _uiState.update { state ->
                     val updatedPrices = state.livePrices.mapValues { (id, currentPrice) ->
-                        val asset = state.assets.find { it.id == id }
+                        val asset = assetMap[id]
                         if (asset != null) PriceSimulator.simulateTick(currentPrice, asset.volatility)
                         else currentPrice
                     }
@@ -57,11 +60,5 @@ class MarketViewModel(application: Application) : AndroidViewModel(application) 
 
     fun selectCategory(category: String?) {
         _uiState.update { it.copy(selectedCategory = category) }
-    }
-
-    fun filteredAssets(): List<Asset> {
-        val state = _uiState.value
-        return if (state.selectedCategory == null) state.assets
-        else state.assets.filter { it.category == state.selectedCategory }
     }
 }

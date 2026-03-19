@@ -37,20 +37,17 @@ import app.krafted.tradeacademy.data.Asset
 import app.krafted.tradeacademy.ui.theme.GainGreen
 import app.krafted.tradeacademy.ui.theme.LossRed
 import app.krafted.tradeacademy.viewmodel.MarketViewModel
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.graphics.PointMode
+import androidx.compose.ui.graphics.StrokeCap
 
 private val categories = listOf("All", "Stocks", "Crypto", "Forex", "Commodities")
-private val categoryEmojis = mapOf(
-    "All" to "",
-    "Stocks" to "",
-    "Crypto" to "",
-    "Forex" to "",
-    "Commodities" to ""
-)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MarketScreen(
-    onAssetClick: (String) -> Unit = {},
     marketViewModel: MarketViewModel = viewModel()
 ) {
     val uiState by marketViewModel.uiState.collectAsState()
@@ -152,7 +149,6 @@ fun MarketScreen(
                     }
                     CategoryChip(
                         category = category,
-                        emoji = categoryEmojis[category] ?: "",
                         isSelected = isSelected,
                         onClick = { marketViewModel.selectCategory(if (category == "All") null else category) }
                     )
@@ -269,7 +265,7 @@ fun SearchBar(query: String, onQueryChange: (String) -> Unit, modifier: Modifier
 }
 
 @Composable
-fun CategoryChip(category: String, emoji: String, isSelected: Boolean, onClick: () -> Unit) {
+fun CategoryChip(category: String, isSelected: Boolean, onClick: () -> Unit) {
     val bgColor by animateColorAsState(
         targetValue = if (isSelected) Color(0xFF2196F3) else Color(0x33FFFFFF),
         animationSpec = tween(300),
@@ -303,13 +299,7 @@ fun AssetCard(asset: Asset, currentPrice: Double, onClick: () -> Unit) {
         label = "priceColor"
     )
 
-    val categoryColor = when (asset.category) {
-        "Stocks" -> Color(0xFF2196F3)
-        "Crypto" -> Color(0xFFF7931A)
-        "Forex" -> Color(0xFF9C27B0)
-        "Commodities" -> Color(0xFFFFD700)
-        else -> Color(0xFF607D8B)
-    }
+    val categoryColor = categoryColor(asset.category)
 
     Box(
         modifier = Modifier
@@ -436,6 +426,20 @@ fun VideoBackground(modifier: Modifier = Modifier) {
             playWhenReady = true
             volume = 0f
             prepare()
+        }
+    }
+    val lifecycleOwner = LocalLifecycleOwner.current
+    DisposableEffect(lifecycleOwner) {
+        val observer = LifecycleEventObserver { _, event ->
+            when (event) {
+                Lifecycle.Event.ON_STOP -> exoPlayer.pause()
+                Lifecycle.Event.ON_START -> exoPlayer.play()
+                else -> {}
+            }
+        }
+        lifecycleOwner.lifecycle.addObserver(observer)
+        onDispose {
+            lifecycleOwner.lifecycle.removeObserver(observer)
         }
     }
     DisposableEffect(Unit) {

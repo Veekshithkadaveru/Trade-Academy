@@ -5,6 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import androidx.sqlite.db.SupportSQLiteDatabase
 
 @Database(
     entities = [WalletEntity::class, HoldingEntity::class, TradeEntity::class],
@@ -26,7 +27,12 @@ abstract class AppDatabase : RoomDatabase() {
                     context.applicationContext,
                     AppDatabase::class.java,
                     "trade_academy.db"
-                ).fallbackToDestructiveMigration().build().also { INSTANCE = it }
+                ).addCallback(object : RoomDatabase.Callback() {
+                    override fun onCreate(db: SupportSQLiteDatabase) {
+                        super.onCreate(db)
+                        db.execSQL("INSERT OR IGNORE INTO wallet (id, cashBalance) VALUES (1, $INITIAL_BALANCE)")
+                    }
+                }).fallbackToDestructiveMigration().build().also { INSTANCE = it }
             }
         }
     }

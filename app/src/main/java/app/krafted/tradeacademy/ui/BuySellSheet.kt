@@ -30,14 +30,6 @@ import app.krafted.tradeacademy.ui.theme.LossRed
 import app.krafted.tradeacademy.viewmodel.BuySellViewModel
 import app.krafted.tradeacademy.viewmodel.TradeResult
 
-private fun categoryColor(category: String): Color = when (category) {
-    "Stocks" -> Color(0xFF2196F3)
-    "Crypto" -> Color(0xFFF7931A)
-    "Forex" -> Color(0xFF9C27B0)
-    "Commodities" -> Color(0xFFFFD700)
-    else -> Color(0xFF607D8B)
-}
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BuySellSheet(
@@ -59,6 +51,7 @@ fun BuySellSheet(
     val actionColor = if (isBuyMode) GainGreen else LossRed
 
     LaunchedEffect(asset.id) {
+        viewModel.clearResult()
         viewModel.loadAssetContext(asset.id)
     }
 
