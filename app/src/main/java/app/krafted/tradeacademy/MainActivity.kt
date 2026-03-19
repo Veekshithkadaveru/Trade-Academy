@@ -28,6 +28,7 @@ import app.krafted.tradeacademy.ui.HomeScreen
 import app.krafted.tradeacademy.ui.MarketScreen
 import app.krafted.tradeacademy.ui.NewsTipsScreen
 import app.krafted.tradeacademy.ui.PortfolioScreen
+import app.krafted.tradeacademy.ui.SplashScreen
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
@@ -39,6 +40,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import app.krafted.tradeacademy.viewmodel.MarketViewModel
 
 sealed class Screen(val route: String, val label: String) {
+    object Splash : Screen("splash", "Splash")
     object Home : Screen("home", "Home")
     object Market : Screen("market", "Market")
     object NewsTips : Screen("news_tips", "News & Tips")
@@ -67,45 +69,49 @@ fun TradeAcademyApp() {
         modifier = Modifier.fillMaxSize(),
         containerColor = Color(0xFF090C14),
         bottomBar = {
-            NavigationBar {
-                val navBackStackEntry by navController.currentBackStackEntryAsState()
-                val currentDestination = navBackStackEntry?.destination
+            val navBackStackEntry by navController.currentBackStackEntryAsState()
+            val currentDestination = navBackStackEntry?.destination
 
-                screens.forEach { screen ->
-                    NavigationBarItem(
-                        icon = {
-                            when (screen) {
-                                Screen.Home -> Icon(Icons.Filled.Home, contentDescription = "Home")
-                                Screen.Market -> Icon(Icons.Filled.List, contentDescription = "Market")
-                                Screen.NewsTips -> Icon(Icons.Filled.Info, contentDescription = "News & Tips")
-                                Screen.Portfolio -> Icon(Icons.Filled.Person, contentDescription = "Portfolio")
-                            }
-                        },
-                        label = { Text(screen.label) },
-                        selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
-                        onClick = {
-                            navController.navigate(screen.route) {
-                                popUpTo(navController.graph.findStartDestination().id) {
-                                    saveState = true
+            if (currentDestination?.route != Screen.Splash.route) {
+                NavigationBar {
+                    screens.forEach { screen ->
+                        NavigationBarItem(
+                            icon = {
+                                when (screen) {
+                                    Screen.Home -> Icon(Icons.Filled.Home, contentDescription = "Home")
+                                    Screen.Market -> Icon(Icons.Filled.List, contentDescription = "Market")
+                                    Screen.NewsTips -> Icon(Icons.Filled.Info, contentDescription = "News & Tips")
+                                    Screen.Portfolio -> Icon(Icons.Filled.Person, contentDescription = "Portfolio")
+                                    Screen.Splash -> {}
                                 }
-                                launchSingleTop = true
-                                restoreState = true
+                            },
+                            label = { Text(screen.label) },
+                            selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
+                            onClick = {
+                                navController.navigate(screen.route) {
+                                    popUpTo(navController.graph.findStartDestination().id) {
+                                        saveState = true
+                                    }
+                                    launchSingleTop = true
+                                    restoreState = true
+                                }
                             }
-                        }
-                    )
+                        )
+                    }
                 }
             }
         }
     ) { innerPadding ->
         NavHost(
             navController = navController,
-            startDestination = Screen.Home.route,
+            startDestination = Screen.Splash.route,
             modifier = Modifier.padding(innerPadding),
             enterTransition = { slideInHorizontally(tween(280)) { it / 4 } },
             exitTransition = { slideOutHorizontally(tween(280)) { -it / 4 } },
             popEnterTransition = { slideInHorizontally(tween(280)) { -it / 4 } },
             popExitTransition = { slideOutHorizontally(tween(280)) { it / 4 } }
         ) {
+            composable(Screen.Splash.route) { SplashScreen(navController) }
             composable(Screen.Home.route) { HomeScreen(navController, marketViewModel = marketViewModel) }
             composable(
                 route = Screen.Market.route,
