@@ -1,8 +1,11 @@
 package app.krafted.tradeacademy.ui
 
 import androidx.compose.animation.*
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -20,6 +23,7 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -416,11 +420,12 @@ fun BuySellSheet(
                         .padding(top = 8.dp)
                         .clip(RoundedCornerShape(14.dp))
                         .background(GainGreen.copy(alpha = 0.12f))
-                        .padding(16.dp),
+                        .height(80.dp),
                     contentAlignment = Alignment.Center
                 ) {
+                    ConfettiOverlay()
                     Text(
-                        text = "Trade Confirmed",
+                        text = "\u2713  Trade Confirmed",
                         color = GainGreen,
                         fontWeight = FontWeight.Bold,
                         fontSize = 16.sp
@@ -478,6 +483,55 @@ fun BuySellSheet(
                     )
                 }
             }
+        }
+    }
+}
+
+private data class ConfettiParticle(
+    val x: Float,
+    val y: Float,
+    val velocityX: Float,
+    val velocityY: Float,
+    val color: Color,
+    val size: Float
+)
+
+@Composable
+private fun ConfettiOverlay() {
+    val particles = remember {
+        val colors = listOf(
+            Color(0xFF4CAF50), Color(0xFF2196F3), Color(0xFFF7931A),
+            Color(0xFF9C27B0), Color(0xFFFFD700), Color(0xFFF44336)
+        )
+        List(40) {
+            ConfettiParticle(
+                x = (0.2f + Math.random().toFloat() * 0.6f),
+                y = 0.5f,
+                velocityX = (-1f + Math.random().toFloat() * 2f) * 0.008f,
+                velocityY = (-0.015f - Math.random().toFloat() * 0.01f),
+                color = colors.random(),
+                size = 3f + Math.random().toFloat() * 4f
+            )
+        }
+    }
+
+    val progress = remember { Animatable(0f) }
+    LaunchedEffect(Unit) {
+        progress.animateTo(1f, animationSpec = tween(1000, easing = LinearEasing))
+    }
+
+    Canvas(modifier = Modifier.fillMaxSize()) {
+        val t = progress.value
+        particles.forEach { p ->
+            val gravity = 0.00003f
+            val px = (p.x + p.velocityX * t * 120) * size.width
+            val py = (p.y + p.velocityY * t * 120 + gravity * (t * 120) * (t * 120)) * size.height
+            val alpha = (1f - t).coerceIn(0f, 1f)
+            drawCircle(
+                color = p.color.copy(alpha = alpha),
+                radius = p.size,
+                center = Offset(px, py)
+            )
         }
     }
 }

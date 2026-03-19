@@ -17,6 +17,9 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.animation.ExitTransition
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -97,12 +100,17 @@ fun TradeAcademyApp() {
         NavHost(
             navController = navController,
             startDestination = Screen.Home.route,
-            modifier = Modifier.padding(innerPadding)
+            modifier = Modifier.padding(innerPadding),
+            enterTransition = { slideInHorizontally(tween(280)) { it / 4 } },
+            exitTransition = { slideOutHorizontally(tween(280)) { -it / 4 } },
+            popEnterTransition = { slideInHorizontally(tween(280)) { -it / 4 } },
+            popExitTransition = { slideOutHorizontally(tween(280)) { it / 4 } }
         ) {
             composable(Screen.Home.route) { HomeScreen(navController, marketViewModel = marketViewModel) }
             composable(
                 route = Screen.Market.route,
-                exitTransition = { ExitTransition.None }
+                exitTransition = { ExitTransition.None },
+                popExitTransition = { ExitTransition.None }
             ) { MarketScreen(marketViewModel = marketViewModel) }
             composable(Screen.NewsTips.route) { NewsTipsScreen() }
             composable(Screen.Portfolio.route) { PortfolioScreen(marketViewModel = marketViewModel) }

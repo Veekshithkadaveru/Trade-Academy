@@ -1,6 +1,7 @@
 package app.krafted.tradeacademy.ui
 
 import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -219,6 +220,14 @@ private fun HomeBalanceCard(
         label = "homePnlColor"
     )
 
+    val animatedValue = remember { Animatable(0f) }
+    LaunchedEffect(totalValue) {
+        animatedValue.animateTo(
+            targetValue = totalValue.toFloat(),
+            animationSpec = tween(durationMillis = 600)
+        )
+    }
+
     Box(
         modifier = modifier
             .fillMaxWidth()
@@ -242,7 +251,7 @@ private fun HomeBalanceCard(
             Text("Total Value", fontSize = 12.sp, color = Color(0xFF999999))
             Spacer(modifier = Modifier.height(4.dp))
             Text(
-                text = formatPrice(totalValue),
+                text = formatPrice(animatedValue.value.toDouble()),
                 fontSize = 32.sp,
                 fontWeight = FontWeight.ExtraBold,
                 color = Color.White
