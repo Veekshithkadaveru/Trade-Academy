@@ -283,7 +283,6 @@ private fun TipCard(tip: Tip, isExpanded: Boolean, onClick: () -> Unit) {
             .background(Color(0x26FFFFFF))
             .clickable(onClick = onClick)
     ) {
-        // Left accent strip
         Box(
             modifier = Modifier
                 .width(3.dp)

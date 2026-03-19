@@ -19,7 +19,7 @@ import kotlinx.coroutines.launch
 
 data class BuySellUiState(
     val cashBalance: Double = 0.0,
-    val currentHolding: Double = 0.0,   // quantity held for selected asset
+    val currentHolding: Double = 0.0,
     val isLoading: Boolean = false,
     val tradeResult: TradeResult? = null
 )
@@ -57,7 +57,7 @@ class BuySellViewModel(application: Application) : AndroidViewModel(application)
 
     fun buy(assetId: String, price: Double, quantity: Double) {
         viewModelScope.launch {
-            if (quantity <= 0) {
+            if (quantity <= 0 || price <= 0) {
                 _uiState.update { it.copy(tradeResult = TradeResult.Error("Enter a valid quantity")) }
                 return@launch
             }
@@ -73,7 +73,6 @@ class BuySellViewModel(application: Application) : AndroidViewModel(application)
                         throw IllegalStateException("Insufficient funds")
                     }
 
-                    // Weighted average buy price
                     val existing = holdingDao.getHolding(assetId)
                     newQty = (existing?.quantity ?: 0.0) + quantity
                     val newAvg = if (existing != null) {
@@ -103,7 +102,7 @@ class BuySellViewModel(application: Application) : AndroidViewModel(application)
 
     fun sell(assetId: String, price: Double, quantity: Double) {
         viewModelScope.launch {
-            if (quantity <= 0) {
+            if (quantity <= 0 || price <= 0) {
                 _uiState.update { it.copy(tradeResult = TradeResult.Error("Enter a valid quantity")) }
                 return@launch
             }

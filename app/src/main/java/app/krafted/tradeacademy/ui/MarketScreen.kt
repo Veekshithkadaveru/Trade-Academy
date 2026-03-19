@@ -189,19 +189,32 @@ fun MarketScreen(
                 }
             }
 
-            LazyColumn(
-                modifier = Modifier.fillMaxSize(),
-                contentPadding = PaddingValues(horizontal = 16.dp, vertical = 4.dp),
-                verticalArrangement = Arrangement.spacedBy(10.dp)
-            ) {
-                items(displayedAssets, key = { it.id }) { asset ->
-                    AssetCard(
-                        asset = asset,
-                        currentPrice = uiState.livePrices[asset.id] ?: asset.basePrice,
-                        onClick = { selectedAsset = asset }
+            if (uiState.isLoading) {
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    CircularProgressIndicator(
+                        color = Color(0xFF2196F3),
+                        modifier = Modifier.size(32.dp),
+                        strokeWidth = 2.dp
                     )
                 }
-                item { Spacer(modifier = Modifier.height(80.dp)) }
+            } else {
+                LazyColumn(
+                    modifier = Modifier.fillMaxSize(),
+                    contentPadding = PaddingValues(horizontal = 16.dp, vertical = 4.dp),
+                    verticalArrangement = Arrangement.spacedBy(10.dp)
+                ) {
+                    items(displayedAssets, key = { it.id }) { asset ->
+                        AssetCard(
+                            asset = asset,
+                            currentPrice = uiState.livePrices[asset.id] ?: asset.basePrice,
+                            onClick = { selectedAsset = asset }
+                        )
+                    }
+                    item { Spacer(modifier = Modifier.height(80.dp)) }
+                }
             }
         }
     }

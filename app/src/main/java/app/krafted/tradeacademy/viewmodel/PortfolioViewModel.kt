@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import androidx.room.withTransaction
 import kotlinx.coroutines.launch
 
 class PortfolioViewModel(application: Application) : AndroidViewModel(application) {
@@ -33,9 +34,11 @@ class PortfolioViewModel(application: Application) : AndroidViewModel(applicatio
 
     fun reset() {
         viewModelScope.launch {
-            walletDao.upsertWallet(WalletEntity(cashBalance = INITIAL_BALANCE))
-            holdingDao.clearAll()
-            tradeDao.clearAll()
+            db.withTransaction {
+                walletDao.upsertWallet(WalletEntity(cashBalance = INITIAL_BALANCE))
+                holdingDao.clearAll()
+                tradeDao.clearAll()
+            }
         }
     }
 }

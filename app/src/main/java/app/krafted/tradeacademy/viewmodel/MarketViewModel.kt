@@ -16,7 +16,8 @@ import kotlinx.coroutines.launch
 data class MarketUiState(
     val assets: List<Asset> = emptyList(),
     val livePrices: Map<String, Double> = emptyMap(),
-    val selectedCategory: String? = null
+    val selectedCategory: String? = null,
+    val isLoading: Boolean = true
 )
 
 class MarketViewModel(application: Application) : AndroidViewModel(application) {
@@ -38,7 +39,7 @@ class MarketViewModel(application: Application) : AndroidViewModel(application) 
             val assets = repository.getAssets()
             assetMap = assets.associateBy { it.id }
             val initialPrices = assets.associate { it.id to it.basePrice }
-            _uiState.update { it.copy(assets = assets, livePrices = initialPrices) }
+            _uiState.update { it.copy(assets = assets, livePrices = initialPrices, isLoading = false) }
         }
     }
 

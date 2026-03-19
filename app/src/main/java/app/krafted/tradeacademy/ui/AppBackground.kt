@@ -13,10 +13,6 @@ import androidx.compose.ui.graphics.RadialGradientShader
 import androidx.compose.ui.graphics.ShaderBrush
 import androidx.compose.ui.graphics.StrokeCap
 
-/**
- * Professional dark background used on all screens except Market.
- * Features: near-black base, two subtle radial colour glows, faint dot grid.
- */
 @Composable
 fun AppBackground(modifier: Modifier = Modifier, content: @Composable () -> Unit) {
     Box(
