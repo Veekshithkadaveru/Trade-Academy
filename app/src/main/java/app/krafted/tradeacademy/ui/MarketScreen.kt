@@ -27,23 +27,22 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
+import app.krafted.tradeacademy.R
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.PlayerView
-import app.krafted.tradeacademy.R
 import app.krafted.tradeacademy.data.Asset
 import app.krafted.tradeacademy.ui.theme.GainGreen
 import app.krafted.tradeacademy.ui.theme.LossRed
 import app.krafted.tradeacademy.viewmodel.MarketViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
-import androidx.compose.ui.platform.LocalLifecycleOwner
-import androidx.compose.ui.graphics.PointMode
-import androidx.compose.ui.graphics.StrokeCap
+import androidx.lifecycle.compose.LocalLifecycleOwner
 
 private val categories = listOf("All", "Stocks", "Crypto", "Forex", "Commodities")
 
@@ -113,7 +112,7 @@ fun MarketScreen(
             ) {
                 Column {
                     Text(
-                        text = "Market",
+                        text = stringResource(R.string.title_market),
                         fontSize = 28.sp,
                         fontWeight = FontWeight.ExtraBold,
                         color = Color.White
@@ -176,6 +175,7 @@ fun MarketScreen(
                         .clip(RoundedCornerShape(8.dp))
                         .background(if (sortByChange) Color(0x33FFFFFF) else Color.Transparent)
                         .clickable { sortByChange = !sortByChange }
+                        .sizeIn(minHeight = 48.dp)
                         .padding(horizontal = 10.dp, vertical = 4.dp),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(4.dp)
@@ -247,7 +247,7 @@ fun LiveIndicator() {
                 .clip(RoundedCornerShape(50))
                 .background(GainGreen)
         )
-        Text(text = "LIVE", fontSize = 11.sp, fontWeight = FontWeight.Bold, color = GainGreen)
+        Text(text = stringResource(R.string.label_live), fontSize = 11.sp, fontWeight = FontWeight.Bold, color = GainGreen)
     }
 }
 
@@ -270,7 +270,7 @@ fun SearchBar(query: String, onQueryChange: (String) -> Unit, modifier: Modifier
             cursorBrush = SolidColor(Color.White),
             decorationBox = { inner ->
                 if (query.isEmpty()) {
-                    Text("Search assets...", fontSize = 14.sp, color = Color(0xFF666666))
+                    Text(stringResource(R.string.search_placeholder), fontSize = 14.sp, color = Color(0xFF9E9E9E))
                 }
                 inner()
             },
@@ -291,7 +291,9 @@ fun CategoryChip(category: String, isSelected: Boolean, onClick: () -> Unit) {
             .clip(RoundedCornerShape(20.dp))
             .background(bgColor)
             .clickable(onClick = onClick)
-            .padding(horizontal = 14.dp, vertical = 8.dp)
+            .sizeIn(minHeight = 48.dp)
+            .padding(horizontal = 14.dp, vertical = 8.dp),
+        contentAlignment = Alignment.Center
     ) {
         Text(
             text = category,
@@ -330,7 +332,7 @@ fun AssetCard(asset: Asset, currentPrice: Double, onClick: () -> Unit) {
             .scale(scale)
             .clip(RoundedCornerShape(16.dp))
             .background(Color(0x26FFFFFF))
-            .clickable(interactionSource = interactionSource, indication = null, onClick = onClick)
+            .clickable(interactionSource = interactionSource, indication = null, onClick = onClick, onClickLabel = "${asset.name} ${asset.id}")
     ) {
         Box(
             modifier = Modifier

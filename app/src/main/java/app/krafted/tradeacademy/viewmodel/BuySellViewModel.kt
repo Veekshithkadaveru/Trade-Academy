@@ -10,6 +10,7 @@ import app.krafted.tradeacademy.data.INITIAL_BALANCE
 import app.krafted.tradeacademy.data.TradeEntity
 import app.krafted.tradeacademy.data.TradeType
 import app.krafted.tradeacademy.data.WalletEntity
+import android.util.Log
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -96,6 +97,9 @@ class BuySellViewModel(application: Application) : AndroidViewModel(application)
                 }
             } catch (e: IllegalStateException) {
                 _uiState.update { it.copy(isLoading = false, tradeResult = TradeResult.Error(e.message ?: "Trade failed")) }
+            } catch (e: Exception) {
+                Log.e("BuySellViewModel", "Unexpected error during buy", e)
+                _uiState.update { it.copy(isLoading = false, tradeResult = TradeResult.Error("Trade failed unexpectedly")) }
             }
         }
     }
@@ -141,6 +145,9 @@ class BuySellViewModel(application: Application) : AndroidViewModel(application)
                 }
             } catch (e: IllegalStateException) {
                 _uiState.update { it.copy(isLoading = false, tradeResult = TradeResult.Error(e.message ?: "Trade failed")) }
+            } catch (e: Exception) {
+                Log.e("BuySellViewModel", "Unexpected error during sell", e)
+                _uiState.update { it.copy(isLoading = false, tradeResult = TradeResult.Error("Trade failed unexpectedly")) }
             }
         }
     }

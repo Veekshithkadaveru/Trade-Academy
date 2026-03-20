@@ -9,11 +9,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.filled.List
-import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.animation.ExitTransition
@@ -73,20 +74,30 @@ fun TradeAcademyApp() {
             val currentDestination = navBackStackEntry?.destination
 
             if (currentDestination?.route != Screen.Splash.route) {
-                NavigationBar {
+                NavigationBar(
+                    containerColor = Color(0xFF090C14),
+                    contentColor = Color.White
+                ) {
                     screens.forEach { screen ->
                         NavigationBarItem(
                             icon = {
                                 when (screen) {
                                     Screen.Home -> Icon(Icons.Filled.Home, contentDescription = "Home")
-                                    Screen.Market -> Icon(Icons.Filled.List, contentDescription = "Market")
+                                    Screen.Market -> Icon(Icons.Filled.Star, contentDescription = "Market")
                                     Screen.NewsTips -> Icon(Icons.Filled.Info, contentDescription = "News & Tips")
-                                    Screen.Portfolio -> Icon(Icons.Filled.Person, contentDescription = "Portfolio")
+                                    Screen.Portfolio -> Icon(Icons.Filled.DateRange, contentDescription = "Portfolio")
                                     Screen.Splash -> {}
                                 }
                             },
                             label = { Text(screen.label) },
                             selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
+                            colors = NavigationBarItemDefaults.colors(
+                                selectedIconColor = Color(0xFF2196F3),
+                                selectedTextColor = Color(0xFF2196F3),
+                                unselectedIconColor = Color(0xFF888888),
+                                unselectedTextColor = Color(0xFF888888),
+                                indicatorColor = Color(0xFF2196F3).copy(alpha = 0.12f)
+                            ),
                             onClick = {
                                 navController.navigate(screen.route) {
                                     popUpTo(navController.graph.findStartDestination().id) {

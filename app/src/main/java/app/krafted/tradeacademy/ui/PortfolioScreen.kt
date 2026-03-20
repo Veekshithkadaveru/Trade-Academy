@@ -16,8 +16,10 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import app.krafted.tradeacademy.R
 import app.krafted.tradeacademy.data.HoldingEntity
 import app.krafted.tradeacademy.data.TradeEntity
 import app.krafted.tradeacademy.data.TradeType
@@ -52,10 +54,10 @@ fun PortfolioScreen(
     if (showResetDialog) {
         AlertDialog(
             onDismissRequest = { showResetDialog = false },
-            title = { Text("Reset Wallet", color = Color.White, fontWeight = FontWeight.Bold) },
+            title = { Text(stringResource(R.string.dialog_reset_title), color = Color.White, fontWeight = FontWeight.Bold) },
             text = {
                 Text(
-                    "This will clear all holdings and reset your balance to \$10,000. This cannot be undone.",
+                    stringResource(R.string.dialog_reset_message),
                     color = Color(0xFFAAAAAA)
                 )
             },
@@ -64,12 +66,12 @@ fun PortfolioScreen(
                     portfolioViewModel.reset()
                     showResetDialog = false
                 }) {
-                    Text("Reset", color = LossRed, fontWeight = FontWeight.Bold)
+                    Text(stringResource(R.string.dialog_reset), color = LossRed, fontWeight = FontWeight.Bold)
                 }
             },
             dismissButton = {
                 TextButton(onClick = { showResetDialog = false }) {
-                    Text("Cancel", color = Color(0xFFAAAAAA))
+                    Text(stringResource(R.string.dialog_cancel), color = Color(0xFFAAAAAA))
                 }
             },
             containerColor = Color(0xFF1A1A1A),
@@ -95,7 +97,7 @@ fun PortfolioScreen(
                 ) {
                     Column {
                         Text(
-                            text = "Portfolio",
+                            text = stringResource(R.string.title_portfolio),
                             fontSize = 28.sp,
                             fontWeight = FontWeight.ExtraBold,
                             color = Color.White
@@ -124,7 +126,7 @@ fun PortfolioScreen(
 
             item {
                 Text(
-                    text = "Holdings",
+                    text = stringResource(R.string.label_holdings),
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color.White,
@@ -136,8 +138,8 @@ fun PortfolioScreen(
             if (holdings.isEmpty()) {
                 item {
                     PortfolioEmptyState(
-                        message = "No holdings yet",
-                        subtitle = "Buy assets from the Market tab",
+                        message = stringResource(R.string.empty_no_holdings),
+                        subtitle = stringResource(R.string.empty_buy_from_market),
                         modifier = Modifier.padding(horizontal = 16.dp)
                     )
                     Spacer(modifier = Modifier.height(24.dp))
@@ -162,7 +164,7 @@ fun PortfolioScreen(
 
             item {
                 Text(
-                    text = "Trade History",
+                    text = stringResource(R.string.label_trade_history),
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color.White,
@@ -174,8 +176,8 @@ fun PortfolioScreen(
             if (tradeHistory.isEmpty()) {
                 item {
                     PortfolioEmptyState(
-                        message = "No trades yet",
-                        subtitle = "Your trade history will appear here",
+                        message = stringResource(R.string.empty_no_trades),
+                        subtitle = stringResource(R.string.empty_trade_history),
                         modifier = Modifier.padding(horizontal = 16.dp)
                     )
                     Spacer(modifier = Modifier.height(24.dp))
@@ -204,7 +206,7 @@ fun PortfolioScreen(
                     shape = RoundedCornerShape(12.dp)
                 ) {
                     Text(
-                        text = "RESET WALLET",
+                        text = stringResource(R.string.btn_reset_wallet),
                         color = LossRed,
                         fontWeight = FontWeight.Bold,
                         fontSize = 14.sp,
@@ -256,7 +258,7 @@ private fun PortfolioSummaryCard(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Column {
-                    Text("Cash", fontSize = 12.sp, color = Color(0xFF999999))
+                    Text(stringResource(R.string.label_cash), fontSize = 12.sp, color = Color(0xFF999999))
                     Text(
                         text = formatPrice(cashBalance),
                         fontSize = 18.sp,
@@ -265,7 +267,7 @@ private fun PortfolioSummaryCard(
                     )
                 }
                 Column(horizontalAlignment = Alignment.End) {
-                    Text("Invested", fontSize = 12.sp, color = Color(0xFF999999))
+                    Text(stringResource(R.string.label_invested), fontSize = 12.sp, color = Color(0xFF999999))
                     Text(
                         text = formatPrice(portfolioValue),
                         fontSize = 18.sp,
@@ -283,7 +285,7 @@ private fun PortfolioSummaryCard(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Column {
-                    Text("Total Value", fontSize = 12.sp, color = Color(0xFF999999))
+                    Text(stringResource(R.string.label_total_value), fontSize = 12.sp, color = Color(0xFF999999))
                     Text(
                         text = formatPrice(totalValue),
                         fontSize = 22.sp,
@@ -461,7 +463,7 @@ private fun TradeHistoryRow(
                     Text(
                         text = dateStr,
                         fontSize = 11.sp,
-                        color = Color(0xFF777777)
+                        color = Color(0xFF9E9E9E)
                     )
                 }
             }
@@ -475,7 +477,7 @@ private fun TradeHistoryRow(
                 Text(
                     text = "${formatQty(trade.quantity)} @ ${formatPrice(trade.price)}",
                     fontSize = 11.sp,
-                    color = Color(0xFF777777)
+                    color = Color(0xFF9E9E9E)
                 )
             }
         }
@@ -499,7 +501,7 @@ private fun PortfolioEmptyState(
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Text(message, fontSize = 14.sp, fontWeight = FontWeight.SemiBold, color = Color(0xFF888888))
             Spacer(modifier = Modifier.height(4.dp))
-            Text(subtitle, fontSize = 12.sp, color = Color(0xFF555555))
+            Text(subtitle, fontSize = 12.sp, color = Color(0xFF9E9E9E))
         }
     }
 }

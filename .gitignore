@@ -14,3 +14,7 @@
 .cxx
 local.properties
 DEVELOPMENT_PLAN.md
+app/release/
+*.jks
+*.keystore
+Untitled

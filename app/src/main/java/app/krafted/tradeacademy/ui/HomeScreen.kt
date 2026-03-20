@@ -19,9 +19,13 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import app.krafted.tradeacademy.R
 import app.krafted.tradeacademy.data.INITIAL_BALANCE
 import app.krafted.tradeacademy.ui.theme.GainGreen
 import app.krafted.tradeacademy.ui.theme.LossRed
@@ -71,13 +75,13 @@ fun HomeScreen(
                         .padding(horizontal = 16.dp, vertical = 4.dp)
                 ) {
                     Text(
-                        text = "Trade Academy",
+                        text = stringResource(R.string.title_trade_academy),
                         fontSize = 28.sp,
                         fontWeight = FontWeight.ExtraBold,
                         color = Color.White
                     )
                     Text(
-                        text = "Your trading dashboard",
+                        text = stringResource(R.string.label_dashboard_subtitle),
                         fontSize = 12.sp,
                         color = Color(0xFFAAAAAA)
                     )
@@ -101,7 +105,7 @@ fun HomeScreen(
 
             item {
                 Text(
-                    text = "Quick Access",
+                    text = stringResource(R.string.label_quick_access),
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color.White,
@@ -143,7 +147,7 @@ fun HomeScreen(
             if (topMovers.isNotEmpty()) {
                 item {
                     Text(
-                        text = "Top Movers",
+                        text = stringResource(R.string.label_top_movers),
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Bold,
                         color = Color.White,
@@ -174,7 +178,7 @@ fun HomeScreen(
             if (holdings.isNotEmpty()) {
                 item {
                     Text(
-                        text = "Your Holdings",
+                        text = stringResource(R.string.label_your_holdings),
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Bold,
                         color = Color.White,
@@ -248,7 +252,7 @@ private fun HomeBalanceCard(
         Column(
             modifier = Modifier.padding(start = 20.dp, end = 16.dp, top = 20.dp, bottom = 20.dp)
         ) {
-            Text("Total Value", fontSize = 12.sp, color = Color(0xFF999999))
+            Text(stringResource(R.string.label_total_value), fontSize = 12.sp, color = Color(0xFF999999))
             Spacer(modifier = Modifier.height(4.dp))
             Text(
                 text = formatPrice(animatedValue.value.toDouble()),
@@ -276,7 +280,7 @@ private fun HomeBalanceCard(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Column {
-                    Text("Cash", fontSize = 12.sp, color = Color(0xFF999999))
+                    Text(stringResource(R.string.label_cash), fontSize = 12.sp, color = Color(0xFF999999))
                     Text(
                         text = formatPrice(cashBalance),
                         fontSize = 16.sp,
@@ -285,7 +289,7 @@ private fun HomeBalanceCard(
                     )
                 }
                 Column(horizontalAlignment = Alignment.End) {
-                    Text("Invested", fontSize = 12.sp, color = Color(0xFF999999))
+                    Text(stringResource(R.string.label_invested), fontSize = 12.sp, color = Color(0xFF999999))
                     Text(
                         text = formatPrice(portfolioValue),
                         fontSize = 16.sp,
@@ -334,7 +338,7 @@ private fun QuickNavButton(
             Text(
                 text = subtitle,
                 fontSize = 11.sp,
-                color = Color(0xFF777777)
+                color = Color(0xFF9E9E9E)
             )
         }
     }

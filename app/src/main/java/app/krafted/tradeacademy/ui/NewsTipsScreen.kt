@@ -21,8 +21,10 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import app.krafted.tradeacademy.R
 import app.krafted.tradeacademy.data.Article
 import app.krafted.tradeacademy.data.Tip
 import app.krafted.tradeacademy.viewmodel.ContentViewModel
@@ -66,7 +68,7 @@ fun NewsTipsScreen(contentViewModel: ContentViewModel = viewModel()) {
                     .padding(horizontal = 16.dp, vertical = 4.dp)
             ) {
                 Text(
-                    text = "News & Tips",
+                    text = stringResource(R.string.title_news_tips),
                     fontSize = 28.sp,
                     fontWeight = FontWeight.ExtraBold,
                     color = Color.White
@@ -98,6 +100,7 @@ fun NewsTipsScreen(contentViewModel: ContentViewModel = viewModel()) {
                             .clip(RoundedCornerShape(20.dp))
                             .background(bgColor)
                             .clickable { selectedTab = index }
+                            .sizeIn(minHeight = 48.dp)
                             .padding(horizontal = 14.dp, vertical = 8.dp)
                     ) {
                         Text(
@@ -213,7 +216,7 @@ private fun NewsCard(article: Article, isExpanded: Boolean, onClick: () -> Unit)
                 Text(
                     text = article.date,
                     fontSize = 11.sp,
-                    color = Color(0xFF777777)
+                    color = Color(0xFF9E9E9E)
                 )
             }
 
@@ -240,7 +243,7 @@ private fun NewsCard(article: Article, isExpanded: Boolean, onClick: () -> Unit)
             Spacer(modifier = Modifier.height(6.dp))
             Text(
                 text = article.category,
-                color = Color(0xFF777777),
+                color = Color(0xFF9E9E9E),
                 fontSize = 11.sp,
                 fontWeight = FontWeight.SemiBold
             )
@@ -370,8 +373,8 @@ private fun TipCard(tip: Tip, isExpanded: Boolean, onClick: () -> Unit) {
                         )
                         Spacer(modifier = Modifier.height(10.dp))
                         Text(
-                            text = "Tap to collapse",
-                            color = Color(0xFF777777),
+                            text = stringResource(R.string.tap_to_collapse),
+                            color = Color(0xFF9E9E9E),
                             fontSize = 12.sp
                         )
                     }

@@ -26,8 +26,10 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import app.krafted.tradeacademy.R
 import app.krafted.tradeacademy.data.Asset
 import app.krafted.tradeacademy.ui.theme.GainGreen
 import app.krafted.tradeacademy.ui.theme.LossRed
@@ -190,7 +192,7 @@ fun BuySellSheet(
                     ) {
                         Text(
                             text = label,
-                            color = if (selected) Color.White else Color(0xFF666666),
+                            color = if (selected) Color.White else Color(0xFF9E9E9E),
                             fontWeight = FontWeight.Bold,
                             fontSize = 15.sp
                         )
@@ -212,7 +214,7 @@ fun BuySellSheet(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        Text("Available Cash", fontSize = 13.sp, color = Color(0xFF888888))
+                        Text(stringResource(R.string.label_available_cash), fontSize = 13.sp, color = Color(0xFF888888))
                         Text(
                             text = formatPrice(uiState.cashBalance),
                             fontSize = 13.sp,
@@ -226,7 +228,7 @@ fun BuySellSheet(
                             modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
-                            Text("Current Holdings", fontSize = 13.sp, color = Color(0xFF888888))
+                            Text(stringResource(R.string.label_current_holdings), fontSize = 13.sp, color = Color(0xFF888888))
                             Text(
                                 text = "${"%.4f".format(uiState.currentHolding)} ${asset.id}",
                                 fontSize = 13.sp,
@@ -246,7 +248,7 @@ fun BuySellSheet(
                     .padding(horizontal = 20.dp),
                 verticalArrangement = Arrangement.spacedBy(10.dp)
             ) {
-                Text("Quantity", fontSize = 13.sp, color = Color(0xFF888888))
+                Text(stringResource(R.string.label_quantity), fontSize = 13.sp, color = Color(0xFF888888))
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -272,7 +274,7 @@ fun BuySellSheet(
                         cursorBrush = SolidColor(actionColor),
                         decorationBox = { inner ->
                             if (quantityText.isEmpty()) {
-                                Text("0.00", fontSize = 18.sp, color = Color(0xFF444466))
+                                Text("0.00", fontSize = 18.sp, color = Color(0xFF8888AA))
                             }
                             inner()
                         },
@@ -282,7 +284,7 @@ fun BuySellSheet(
                         text = asset.id,
                         fontSize = 13.sp,
                         fontWeight = FontWeight.Bold,
-                        color = Color(0xFF666666)
+                        color = Color(0xFF9E9E9E)
                     )
                 }
 
@@ -307,6 +309,7 @@ fun BuySellSheet(
                                     val filled = maxQty * pct / 100.0
                                     quantityText = if (filled > 0) "%.4f".format(filled).trimEnd('0').trimEnd('.') else ""
                                 }
+                                .sizeIn(minHeight = 48.dp)
                                 .padding(vertical = 8.dp),
                             contentAlignment = Alignment.Center
                         ) {
@@ -354,9 +357,9 @@ fun BuySellSheet(
                             modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
-                            Text("Order Type", fontSize = 12.sp, color = Color(0xFF888888))
+                            Text(stringResource(R.string.label_order_type), fontSize = 12.sp, color = Color(0xFF888888))
                             Text(
-                                text = if (isBuyMode) "Market Buy" else "Market Sell",
+                                text = stringResource(if (isBuyMode) R.string.label_market_buy else R.string.label_market_sell),
                                 fontSize = 12.sp,
                                 fontWeight = FontWeight.SemiBold,
                                 color = actionColor
@@ -425,7 +428,7 @@ fun BuySellSheet(
                 ) {
                     ConfettiOverlay()
                     Text(
-                        text = "\u2713  Trade Confirmed",
+                        text = "\u2713  ${stringResource(R.string.trade_confirmed)}",
                         color = GainGreen,
                         fontWeight = FontWeight.Bold,
                         fontSize = 16.sp
@@ -476,7 +479,7 @@ fun BuySellSheet(
                     )
                 } else {
                     Text(
-                        text = if (isBuyMode) "Confirm Buy" else "Confirm Sell",
+                        text = stringResource(if (isBuyMode) R.string.btn_confirm_buy else R.string.btn_confirm_sell),
                         fontWeight = FontWeight.Bold,
                         fontSize = 16.sp,
                         color = Color.White.copy(alpha = buttonAlpha)
@@ -505,12 +508,12 @@ private fun ConfettiOverlay() {
         )
         List(40) {
             ConfettiParticle(
-                x = (0.2f + Math.random().toFloat() * 0.6f),
+                x = (0.2f + kotlin.random.Random.nextFloat() * 0.6f),
                 y = 0.5f,
-                velocityX = (-1f + Math.random().toFloat() * 2f) * 0.008f,
-                velocityY = (-0.015f - Math.random().toFloat() * 0.01f),
+                velocityX = (-1f + kotlin.random.Random.nextFloat() * 2f) * 0.008f,
+                velocityY = (-0.015f - kotlin.random.Random.nextFloat() * 0.01f),
                 color = colors.random(),
-                size = 3f + Math.random().toFloat() * 4f
+                size = 3f + kotlin.random.Random.nextFloat() * 4f
             )
         }
     }

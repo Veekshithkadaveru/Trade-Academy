@@ -1,6 +1,7 @@
 package app.krafted.tradeacademy.data
 
 import android.content.Context
+import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.Dispatchers
@@ -23,6 +24,7 @@ class AssetRepository(context: Context) {
                 val type = object : TypeToken<List<Asset>>() {}.type
                 gson.fromJson<List<Asset>>(json, type)
             } catch (e: Exception) {
+                Log.e("AssetRepository", "Failed to load assets", e)
                 emptyList()
             }
         }.also { cachedAssets = it }
@@ -35,6 +37,7 @@ class AssetRepository(context: Context) {
                 val json = appContext.assets.open("news.json").bufferedReader().use { it.readText() }
                 gson.fromJson(json, NewsResponse::class.java).articles
             } catch (e: Exception) {
+                Log.e("AssetRepository", "Failed to load articles", e)
                 emptyList()
             }
         }.also { cachedArticles = it }
@@ -47,6 +50,7 @@ class AssetRepository(context: Context) {
                 val json = appContext.assets.open("tips.json").bufferedReader().use { it.readText() }
                 gson.fromJson(json, TipsResponse::class.java).tips
             } catch (e: Exception) {
+                Log.e("AssetRepository", "Failed to load tips", e)
                 emptyList()
             }
         }.also { cachedTips = it }

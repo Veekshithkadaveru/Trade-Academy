@@ -5,13 +5,30 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.PointMode
 import androidx.compose.ui.graphics.RadialGradientShader
 import androidx.compose.ui.graphics.ShaderBrush
 import androidx.compose.ui.graphics.StrokeCap
+
+private fun buildDotGrid(size: Size): List<Offset> {
+    val spacing = 48f
+    val points = mutableListOf<Offset>()
+    var x = spacing
+    while (x < size.width) {
+        var y = spacing
+        while (y < size.height) {
+            points.add(Offset(x, y))
+            y += spacing
+        }
+        x += spacing
+    }
+    return points
+}
 
 @Composable
 fun AppBackground(modifier: Modifier = Modifier, content: @Composable () -> Unit) {
@@ -46,17 +63,7 @@ fun AppBackground(modifier: Modifier = Modifier, content: @Composable () -> Unit
 
 
             val dotColor = Color(0x14FFFFFF)
-            val spacing = 48f
-            val points = mutableListOf<Offset>()
-            var x = spacing
-            while (x < size.width) {
-                var y = spacing
-                while (y < size.height) {
-                    points.add(Offset(x, y))
-                    y += spacing
-                }
-                x += spacing
-            }
+            val points = buildDotGrid(size)
             drawPoints(
                 points = points,
                 pointMode = PointMode.Points,
